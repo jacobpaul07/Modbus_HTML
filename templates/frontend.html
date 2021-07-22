@@ -1,0 +1,130 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+	<link  href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link  rel="stylesheet" href="{% static 'css/Style.css' %}">
+     <script src ="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <title>Sensor Data</title>
+    <script type="text/javascript" src="{% static 'js/jquery-3.6.0.js' %}" alt="My image">
+    </script>
+    <style>
+        * {
+            font-family: sans-serif;
+            /* Change your font family */
+        }
+
+        .content-table {
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+    </style>
+</head>
+<style>
+    body{background-color: #F0F0F0;}
+</style>
+
+<body>
+<h1 style="text-align: center;">Sensor values</h1>
+
+<table id='table' class="content-table">
+    <!-- HEADING FORMATION -->
+    <thead>
+    <tr>
+        <th>Sl.No</th>
+        <th>Sensor Name</th>
+        <th>Sensor Address</th>
+        <th>Sensor Value</th>
+    </tr>
+    </thead>
+    <tbody id="table-body">
+
+    </tbody>
+
+</table>
+
+<div id="response"></div>
+
+<script>
+
+    $(document).ready(function () {
+
+        renderData();
+        setInterval(function () {
+            renderData();
+        }, 3000);
+
+        function renderData() {
+
+            var employeeUrl = "http://127.0.0.1:8000/api";
+            $.ajax({
+                dataType: "json",
+                url: employeeUrl,
+                success: function (response) {
+                    debugger;
+                    data = response.data;
+                    if (data.length > 0) {
+                        var sensor = "";
+                        $('#response').html(data.length + 'data avilable');
+                        $.each(data, function (key, value) {
+                            sensor += '<tr>';
+                            sensor += '<td>' + key + '</td>';
+                            sensor += '<td>' + value.sensorName + '</td>';
+                            sensor += '<td>' + value.sensorAddress + '</td>';
+                            sensor += '<td>' + value.sensorValue + '</td>';
+                            sensor += '</tr>';
+                        });
+                    }
+                    else {
+                        $('#response').html('No Data');
+                    }
+                    $('#table-body').html(sensor);
+                }
+            });
+        }
+    });
+
+</script>
+</body>
+
+</html>

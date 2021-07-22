@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ {% load static %}
+	<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+	<link  href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link  rel="stylesheet" href="{% static 'css/Style.css' %}">
+
+    <script src ="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<style>
+    body{background-color: #F0F0F0;}
+</style>
+
+<body>
+<div class="page-contant">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="common-header">
+                    <div class="title">
+                        <button class="Backtohome">Back to home</button>
+                        <button class="logout">Logout</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="panel DataPanel">
+                    <div class="panel-body">
+                        <div class="content">
+                            <div class="dataTille">
+                                <h6>Sensor 1</h6>
+
+                                <span class="line02">Sensor Working</span>
+                            </div>
+                            <input type="text" placeholder={{ table.0 }}V  readonly="">
+                        </div>
+                        <div class="content">
+                            <div class="dataTille">
+                                <h6>Sensor 2</h6>
+                                <span class="line02">Sensor Working</span>
+                            </div>
+
+                            <input type="text" placeholder={{ table.1 }}V readonly="">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-md-7">
+                    <div class="panel DataPanel02">
+                        <div class="panel-body">
+                            <div class="content">
+                                <div class="dataTille edit-1">
+                                    <span class="employee">User:</span>
+                                    <h6>Jacob Paul</h6>
+
+                                    <button class="btn CusBtn">Export</button>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="dataTille edit-2">
+                                    <h6>Data Table</h6>
+                                    <span class="line02">Modbus TCP data</span>
+                                </div>
+                            </div>
+                            <div class="content DataTable">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                      <tr>
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">Register Address</th>
+                                        <th scope="col">Sensor Value</th>
+                                        <th scope="col">Status</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for row in table %}
+
+                                      <tr>
+                                          <th scope="row"> {{forloop.counter}}</th>
+                                          <th scope="row"> 4000{{forloop.counter}}</th>
+                                          <td>{{row}} V</td>
+                                          <th>Good</th>
+
+                                      </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
